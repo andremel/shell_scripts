@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Tested on OS X 10.10.4
+# https://support.apple.com/en-us/HT203998
+#   - save this with a .sh extension (e.g hideuser.sh) in an editor 
+#   - make sure to convert to plain text and save as a .sh 
+# To compile:
+#   - in terminal navigate to where you saved it (i.e cd Desktop)
+#   - type sudo chmod += hideuser.sh (or whatever you saved it as)
+# To execute:
+#   - now you can upload it to your JSS/Deploy/Munki or just execute it locally with:
+#   - sudo sh hideuser.sh (or whatever you named it)
+#   
+# To show your hidden user folder after you run this - run these two commands in terminal:
+#   sudo chflags nohidden /private/var/name_of_the_user_folder_you_hid
+#   sudo chflags nohidden /Users/name_of_the_user_folder_you_hid
+
+## EDIT HERE
+## --------------------------------------------------------------------------------------
+
+# user_to_hide & new_dir_path - edit CHANGE_THIS to the (case sensitive) user folder you wish to hide
+
+user_to_hide="$3/Users/CHANGE_THIS"
+new_dir_path="$3/var/CHANGE_THIS/"
+
+## DO NOT EDIT BELOW THIS LINE
+## --------------------------------------------------------------------------------------
+
+# where we are going to hide the user folder
+hidden_dir="$3/private/var/"
+
+# if the user folder exists && it isn't in /private/var/ 
+if [[ -d "$user_to_hide" ]] && [[ ! -d "$new_dir_path" ]]; then
+
+# move the user folder into /private/var/ and say it was moved successfully
+   mv "$user_to_hide" "$hidden_dir"
+   echo "Step 1: folder moved successfully!
+"
+# hiding the account
+# see: https://support.apple.com/en-us/HT203998
+   dscl . create "$user_to_hide" IsHidden 1
+   echo "Step 2: user hidden successfully
+"
+# updates the user record of "hiddenuser" with the new home directory path in /var/ 
+# see: https://support.apple.com/en-us/HT203998
+   dscl . -create "$user_to_hide" NFSHomeDirectory "$new_dir_path"
+   echo "Step 3: home folder path moved to hidden directory
+"
+#if theres a problem print it   
+else 
+   printf "Folder NOT hidden
+"
+fi
+
+exit 0
