@@ -23,7 +23,6 @@ new_dir_path="$3/var/CHANGE_THIS/"
 
 ## DO NOT EDIT BELOW THIS LINE
 ## --------------------------------------------------------------------------------------
-
 # where we are going to hide the user folder
 hidden_dir="$3/private/var/"
 
