@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Tested on OS X 10.10.4
+# Tested on OS X 10.10.4 - this is my first shell script be gentle
 # https://support.apple.com/en-us/HT203998
 #   - save this with a .sh extension (e.g hideuser.sh) in an editor 
 #   - make sure to convert to plain text and save as a .sh 
@@ -17,9 +17,7 @@
 
 ## EDIT HERE
 ## --------------------------------------------------------------------------------------
-
 # user_to_hide & new_dir_path - edit CHANGE_THIS to the (case sensitive) user folder you wish to hide
-
 user_to_hide="$3/Users/CHANGE_THIS"
 new_dir_path="$3/var/CHANGE_THIS/"
 
